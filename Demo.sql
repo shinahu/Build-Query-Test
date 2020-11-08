@@ -1,3 +1,6 @@
+CREATE DATABASE demo;
+USE demo;
+
 /* RELATIONAL SCHEMA
 Abdulla shinah 103219744
 
@@ -163,6 +166,75 @@ FROM BOOKING
 WHERE Payment > ( SELECT AVG( Payment ) FROM BOOKING );
 
 
+
+
+
+
+--Task 5 Create a View based on Query 1 from Task 4--
+
+CREATE VIEW TASK5 AS SELECT C.GivenName, C.Surname, T.TourName, T.DESCRIPTION, E.EventYear, 
+E.EventMonth,E.EventDay,E.EventFee, B.DateBooked, B.Payment
+FROM Booking B 
+​
+INNER JOIN Client C
+ON B.ClientID = C.ClientID
+​
+INNER JOIN Event E 
+ON B.TourName = E.TourName AND B.EventYear = E.EventYear AND B.EventMonth = E.EventMonth 
+AND B.EventDay = E.EventDay
+​
+INNER JOIN Tour T 
+ON E.TourName = T.TourName;
+
+
+--Task 6 --
+
+​
+---Testing Query 1 From Task 4----
+​
+--- Return same 13 rows of data as per the orginal query task 4 - Query 1
+SELECT *
+FROM Booking;
+​
+​
+-- Returns Count of rows as 13 - same number of rows in the task 4 - Query 1
+SELECT COUNT(*)
+FROM Booking;
+​
+---- Can confirm the query result is correct which is showing 13 rows of data----
+​
+​
+---Testing Query 2 From Task 4----
+​
+--- Both these test qureies provide 13 results (Rows of data) ---
+SELECT * 
+FROM Booking;
+​
+SELECT COUNT(*)
+FROM Booking;
+
+--- The result from the query is ---
+​
+Feb	North	3
+Jan	North	3
+Jan	South	4
+Jan	West	3
+​
+Total = 3+3+4+3 = 13
+​
+-- The output of the queries is 13 or 13 rows of data--
+
+--Test Query 3 From Task 4--
+​
+--The test queries returns count of 4 Rows, which is as the original query Task 4 Query 3 --
+SELECT COUNT(Payment)
+FROM Booking
+WHERE Payment > (SELECT AVG(Payment) FROM Booking);
+​
+--- calculated the average as 200 from all the data and the result is the same as Task 4 Query No 3--
+SELECT *
+FROM Booking
+WHERE Payment > 200;
 
 
 
