@@ -1,0 +1,2 @@
+/* RELATIONAL SCHEMA
+Abdulla shinah 103219744*/
