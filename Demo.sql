@@ -120,7 +120,52 @@ VALUES
     ( 103219744, 'West', 2016, 'Jan', 29, '2015-12-16', 255),
     ( 103219744, 'North', 2016, 'Jan', 9, '2015-12-16', 200);
 
+--Task 2--
+Select * from client
+Select * from Tour
+Select * from Event
+Select * from Booking 
+
 
 --Task 3 --
 
 Select * from client
+
+
+--Task 4 Query 1 Write a query that shows the client first name and surname, 
+--the tour name and description,the tour event year, month, day and fee, the booking date and the fee paid for the booking--
+
+SELECT Client.GivenName , CLIENT.Surname , TOUR.TourName , TOUR.Description , EVENT.EventDay , EVENT.EventYear , EVENT.EventMonth ,  EVENT.EventFee , BOOKING.Payment ,  BOOKING.DateBooked
+FROM TOUR
+INNER JOIN EVENT
+ON TOUR.TourName = EVENT.TourName
+INNER JOIN BOOKING
+ON (EVENT.EventYear = BOOKING.EventYear AND EVENT.EventMonth = BOOKING.EventMonth AND  EVENT.EventDay = BOOKING.EventDay AND EVENT.TourName = BOOKING.TourName)
+INNER JOIN CLIENT
+ON BOOKING.ClientID = CLIENT.ClientID; 
+
+
+--Task 4 Query 2 -- Write a query which shows the number of bookings for each (tour event) month, for each
+--tour in the following example format
+
+SELECT EVENT.EventMonth , TOUR.TourName , COUNT(*) AS [Num Booking] 
+FROM TOUR
+INNER JOIN EVENT
+ON TOUR.TourName = EVENT.TourName
+GROUP BY EVENT.EventMonth , TOUR.TourName
+ORDER BY EVENT.EventMonth , TOUR.TourName;
+
+
+--Task 4 Query 3:Write a query which lists all bookings which have a payment amount greater than the average payment amount. (This query must use a sub-query.)
+
+SELECT *
+FROM BOOKING
+WHERE Payment > ( SELECT AVG( Payment ) FROM BOOKING );
+
+
+
+
+
+
+
+
