@@ -28,6 +28,8 @@ FOREIGN KEY (ClientID) References Client
   Task 2
  */
 
+ 
+
 IF OBJECT_ID('TOUR') IS NOT NULL
 	DROP TABLE TOUR;
 IF OBJECT_ID('CLIENT') IS NOT NULL
@@ -51,16 +53,16 @@ CREATE TABLE Client
     ClientID    INT,
     Surname     NVARCHAR(100) NOT NULL,
     GivenName   NVARCHAR(100) NOT NULL,
-    Gender      NVARCHAR(1) CHECK (Gender in ('M', 'F', 'I')),
+    Gender      NVARCHAR(1) CHECK (Gender in ('M', 'F', 'I')) NULL,
     PRIMARY KEY (ClientID)
 );
 
 CREATE TABLE Event
 (
     TourName    NVARCHAR (100),
-    EventYear   INT CHECK (EventYear between 0 and 9999),
+    EventYear   INT CHECK (len(EventYear)=4),
     EventMonth  NVARCHAR(3) CHECK (EventMonth in ('Jan','Feb','Mar','Apr','May', 'Jun','Jul','Aug','Sep','Oct','Nov','Dec')),
-    EventDay    INT CHECK (EventDay between 1 and 31),
+    EventDay    INT CHECK (EventDay >=1 And EventDay <=31),
     EventFee    MONEY CHECK (EventFee > 0) NOT NULL,
     PRIMARY KEY (TourName, EventYear, EventMonth, EventDay),
     FOREIGN KEY (TourName) References Tour
@@ -70,11 +72,11 @@ CREATE TABLE Booking
 (
     ClientID    INT,
     TourName    NVARCHAR (100),
-    EventYear   INT CHECK (EventYear between 0 and 9999),
+    EventYear   INT CHECK (len(EventYear)=4),
     EventMonth  NVARCHAR(3) CHECK (EventMonth in ('Jan','Feb','Mar','Apr','May', 'Jun','Jul','Aug','Sep','Oct','Nov','Dec')),
-    EventDay    INT CHECK (EventDay between 1 and 31),
+    EventDay    INT CHECK (EventDay >=1 And EventDay <=31),
     DateBooked  DATE NOT NULL,
-    Payment     MONEY CHECK (Payment > 0),
+    Payment     MONEY CHECK (Payment > 0) NOT NULL,
     PRIMARY KEY (ClientID, TourName, EventYear, EventMonth, EventDay),
     FOREIGN KEY (TourName, EventYear, EventMonth, EventDay) References Event,
     FOREIGN KEY (ClientID) References Client,
@@ -151,21 +153,20 @@ ON BOOKING.ClientID = CLIENT.ClientID;
 --Task 4 Query 2 -- Write a query which shows the number of bookings for each (tour event) month, for each
 --tour in the following example format
 
-SELECT EVENT.EventMonth , TOUR.TourName , COUNT(*) AS [Num Booking] 
-FROM TOUR
-INNER JOIN EVENT
-ON TOUR.TourName = EVENT.TourName
-GROUP BY EVENT.EventMonth , TOUR.TourName
-ORDER BY EVENT.EventMonth , TOUR.TourName;
+
+SELECT BOOKING.EventMonth, BOOKING.TourName,  COUNT(*) AS [Num Booking] 
+FROM BOOKING
+GROUP BY BOOKING.EventMonth, BOOKING.TourName
+ORDER BY BOOKING.EventMonth DESC, BOOKING.TourName 
 
 
---Task 4 Query 3:Write a query which lists all bookings which have a payment amount greater than the average payment amount. (This query must use a sub-query.)
+
+--Task 4 Query 3:Write a query which lists all bookings which have a payment 
+--amount greater than the average payment amount. (This query must use a sub-query.)
 
 SELECT *
 FROM BOOKING
 WHERE Payment > ( SELECT AVG( Payment ) FROM BOOKING );
-
-
 
 
 
