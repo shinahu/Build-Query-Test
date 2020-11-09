@@ -190,23 +190,22 @@ ON E.TourName = T.TourName;
 --Task 6 --
 
 ​
----Testing Query 1 From Task 4----
+--Testing Query 1 From Task 4--
 ​
---- Return same 13 rows of data as per the orginal query task 4 - Query 1
+-- Return same 13 rows of data as per the orginal query task 4 - Query 1
 SELECT *
 FROM Booking;
-​
 ​
 -- Returns Count of rows as 13 - same number of rows in the task 4 - Query 1
 SELECT COUNT(*)
 FROM Booking;
 ​
----- Can confirm the query result is correct which is showing 13 rows of data----
+-- Can confirm the query result is correct which is showing 13 rows of data----
 ​
 ​
----Testing Query 2 From Task 4----
+--Testing Query 2 From Task 4--
 ​
---- Both these test qureies provide 13 results (Rows of data) ---
+-- Both these test queries provide 13 results (Rows of data) ---
 SELECT * 
 FROM Booking;
 ​
@@ -231,7 +230,7 @@ SELECT COUNT(Payment)
 FROM Booking
 WHERE Payment > (SELECT AVG(Payment) FROM Booking);
 ​
---- calculated the average as 200 from all the data and the result is the same as Task 4 Query No 3--
+--calculated the average as 200 from all and the result is the same as Task 4 Query No 3--
 SELECT *
 FROM Booking
 WHERE Payment > 200;
