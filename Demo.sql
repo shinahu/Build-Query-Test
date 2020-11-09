@@ -131,6 +131,15 @@ Select * from Tour
 Select * from Event
 Select * from Booking 
 
+SELECT table_catalog [database], table_schema [schema], table_name name, table_type type
+FROM INFORMATION_SCHEMA.TABLES
+GO
+
+SELECT *
+FROM INFORMATION_SCHEMA.tables;
+
+
+
 
 --Task 3 --
 
